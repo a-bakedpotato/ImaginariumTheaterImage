@@ -7,7 +7,7 @@ class Character {
 	
 	get element(){
 		const build = this._raw[0]; //element doesnt change unless mc
-		if (['10000007', '10000009'].includes(this.id)) return null; //mc
+		if (['10000007', '10000009'].includes(this.id)) return 'mc'; //mc
 		
 		const elements = {
 			70: 'pyro',
@@ -30,6 +30,7 @@ class Character {
 	get icon(){
 		if (!avatarData) throw new Error('Missing avatarData');
 		
+		if (this.element === 'mc') return avatarData[this.id + '-anemo'].icon;
 		return avatarData[this.id].icon;
 	}
 	
@@ -45,6 +46,7 @@ class Character {
 	}
 	
 	get name(){
+		if (this.element === 'mc') return 'Traveler';
 		if (!avatarData) throw new Error('Missing avatarData');
 		
 		return avatarData[this.id].name;

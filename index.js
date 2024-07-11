@@ -15,7 +15,8 @@ const elementColors = {
 	dendro: '#B1EB29',
 	hydro: '#08E4FF',
 	pyro: '#F16003',
-	cryo: '#CFFFFF'
+	cryo: '#CFFFFF',
+	mc: '#AAAAAA'
 }
 
 async function getUidAccount(){
@@ -47,6 +48,7 @@ async function main(){
 	Character.setAvatarData(avatarData.data.data.items);
 	
 	const specialIds = special.map(c => Character.getIdFromName(c));
+	specialIds.push('10000005', '10000007');
 	
 	const w = 500 * data.length;
 	const h = Math.max(...data.map(a => a.characters.filter(c => c.level >= 70).filter(c => elements.includes(c.element) || specialIds.includes(c.id)).length)) * 50 + 65;
