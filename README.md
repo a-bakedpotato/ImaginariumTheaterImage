@@ -9,7 +9,7 @@ Gets saved characters from [Enka.Network](https://enka.network) and generates an
 4. Run `run.bat`. This will open a command prompt window which shows progress on image generation. The image will automatically open after it has finished generating. The image will be automatically saved in the base folder as `output.png`.
 
 ## Example Output
-![Example](https://github.com/a-bakedpotato/ImaginariumTheaterImage/blob/main/example.png?raw=true)
+![example](https://github.com/user-attachments/assets/701adf5b-2ad4-4c73-aeaa-5f27a1d8fdb9)
 
 ### Credits
 - [Ambr.Top](https://ambr.top/en) - Character Icons & Names
