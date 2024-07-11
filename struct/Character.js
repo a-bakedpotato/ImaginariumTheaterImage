@@ -34,7 +34,7 @@ class Character {
 	}
 	
 	get id(){
-		return this._raw[0].avatar_id;
+		return this._raw[0].avatar_id.toString();
 	}
 	
 	get level(){
@@ -55,7 +55,7 @@ class Character {
 		
 		for (const chara of Object.values(avatarData)){
 			if (chara.name.toLowerCase() !== name.toLowerCase()) continue;
-			return chara.id;
+			return chara.id.toString();
 		}
 		
 		return null;
