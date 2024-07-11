@@ -8,6 +8,9 @@ Gets saved characters from [Enka.Network](https://enka.network) and generates an
 3. Edit `settings.json` to set restrictions and account. Make sure the JSON is valid when saving. This can be verified using [JsonLint](https://jsonlint.com).
 4. Run `run.bat`. This will open a command prompt window which shows progress on image generation. The image will automatically open after it has finished generating. The image will be automatically saved in the base folder as `output.png`.
 
+## Example Output
+![Example](https://github.com/a-bakedpotato/ImaginariumTheaterImage/blob/main/example.png?raw=true)
+
 ### Credits
 - [Ambr.Top](https://ambr.top/en) - Character Icons & Names
 - [Axios](https://github.com/axios/axios) - HTTP requests
