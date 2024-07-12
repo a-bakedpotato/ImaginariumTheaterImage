@@ -7,7 +7,7 @@ class Character {
 	
 	get element(){
 		const build = this._raw[0]; //element doesnt change unless mc
-		if (['10000007', '10000009'].includes(this.id)) return 'mc'; //mc
+		if (['10000005', '10000007'].includes(this.id)) return 'mc'; //mc
 		
 		const elements = {
 			70: 'pyro',
@@ -42,7 +42,7 @@ class Character {
 		const levels = [];
 		
 		for (const build of this._raw) levels.push(parseInt(build.avatar_data.propMap['4001'].val));
-		return Math.max(levels);
+		return Math.max(...levels);
 	}
 	
 	get name(){
