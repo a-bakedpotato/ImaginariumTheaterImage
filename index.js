@@ -65,8 +65,6 @@ async function main(){
 	const wolfyH = Math.min(h, 250);
 	const wolfyW = wolfyH * 6 / 5
 	ctx.drawImage(wolfy, w - wolfyW, h - wolfyH, wolfyW, wolfyH);
-	//ctx.fillStyle = '#FFFFFF';
-	//ctx.fillRect(0, 0, w, h);
 	
 	const cache = {};
 	let i = 0;
