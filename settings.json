@@ -1,5 +1,5 @@
 {
 	"enka": "potato",
-	"elements": ["pyro", "anemo", "electro"],
-	"special": ["Sigewinne", "Baizhu", "Alhaitham", "Wriothesley"]
+	"elements": ["hydro", "anemo", "cryo"],
+	"special": ["Emilie", "Dehya", "Nahida", "Xiangling"]
 }

@@ -8,8 +8,10 @@ class Character {
 	}
 	
 	get constellation(){
-		const build = this._raw[0];
-		return build.avatar_data.talentIdList?.length ?? 0;
+		const cons = [];
+		
+		for (const build of this._raw) cons.push(build.avatar_data.talentIdList?.length ?? 0);
+		return Math.max(...cons);
 	}
 	
 	get element(){
