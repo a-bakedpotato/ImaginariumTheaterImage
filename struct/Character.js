@@ -62,7 +62,7 @@ class Character {
 	}
 	
 	get weapon(){
-		const build = this._raw.sort((a, b) => b.avatar_data.equipList.find(e => e.weapon).flat.rankLevel - a.avatar_data.equipList.find(e => e.weapon).flat.rankLevel)[0]; //builds are not in same order as enka website and this is a quick fix, if anyone wants to do this better feel free to make a pr, rn im just making it highest rarity weapon
+		const build = this._raw[this._raw.length - 1]; //builds are not in same order as enka website and this is a quick fix, if anyone wants to do this better feel free to make a pr, this works for my accounts but maybe theres a better way? add a force build option in settings.json?
 		return new Weapon(build.avatar_data.equipList.find(e => e.weapon));
 	}
 	
