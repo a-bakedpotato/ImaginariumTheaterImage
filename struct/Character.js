@@ -1,8 +1,15 @@
+const Weapon = require('./Weapon.js');
+
 let avatarData;
 
 class Character {
 	constructor(data){
 		this._raw = data;
+	}
+	
+	get constellation(){
+		const build = this._raw[0];
+		return build.avatar_data.talentIdList?.length ?? 0;
 	}
 	
 	get element(){
@@ -50,6 +57,14 @@ class Character {
 		if (!avatarData) throw new Error('Missing avatarData');
 		
 		return avatarData[this.id].name;
+	}
+	
+	get weapon(){
+		const build = this._raw.sort((a, b) => b.avatar_data.equipList.find(e => e.weapon).flat.rankLevel - a.avatar_data.equipList.find(e => e.weapon).flat.rankLevel)[0]; //builds are not in same order as enka website and this is a quick fix, if anyone wants to do this better feel free to make a pr, rn im just making it highest rarity weapon
+		
+		//const build = this._raw[0];
+		if (this.name === 'Lynette') console.log(build.avatar_data.equipList.find(e => e.weapon));
+		return new Weapon(build.avatar_data.equipList.find(e => e.weapon));
 	}
 	
 	static getIdFromName(name){

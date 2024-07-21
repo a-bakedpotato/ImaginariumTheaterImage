@@ -4,7 +4,7 @@ const cp = require('child_process');
 
 const { createCanvas, loadImage } = require('canvas');
 const { enka, elements, special } = require('./settings.json');
-const { Account, Character } = require('./struct');
+const { Account, Character, Weapon } = require('./struct');
 
 const isUidAccount = /(18|[15-9])\d{8}/.test(enka);
 
@@ -44,8 +44,10 @@ async function main(){
 	console.log('Initializing data');
 	const data = isUidAccount ? await getUidAccount() : await getUsernameAccount();
 	const avatarData = await axios.get('https://api.ambr.top/v2/en/avatar');
+	const weaponData = await axios.get('https://api.ambr.top/v2/en/weapon');
 	
 	Character.setAvatarData(avatarData.data.data.items);
+	Weapon.setWeaponData(weaponData.data.data.items);
 	
 	const specialIds = special.map(c => Character.getIdFromName(c));
 	specialIds.push('10000005', '10000007');
@@ -88,10 +90,10 @@ async function main(){
 			ctx.fillRect(x, y, 480, 45);
 			
 			//icon
-			const response = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
-			const buffer = Buffer.from(response.data, 'binary');
-			const img = await loadImage(buffer);
-			ctx.drawImage(img, x + 5, y, 45, 45);
+			const avatarIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
+			const avatarBuffer = Buffer.from(avatarIcon.data, 'binary');
+			const charImg = await loadImage(avatarBuffer);
+			ctx.drawImage(charImg, x + 5, y, 45, 45);
 			
 			//level
 			ctx.textAlign = 'left';
@@ -101,7 +103,33 @@ async function main(){
 			
 			//name
 			ctx.textAlign = 'center';
-			ctx.fillText(c.name, x + 325, y + 22);
+			ctx.fillText(c.name, x + 330, y + 22);
+			
+			//constellation
+			const con = c.constellation;
+			ctx.fillStyle = con === 6 ? '#AB890E' : '#333333';
+			ctx.fillRect(x + 34, y + 24, 20, 20);
+			ctx.fillStyle = con === 6 ? '#E3C956' : '#DDDDDD';
+			ctx.fillRect(x + 36, y + 26, 16, 16);
+			ctx.fillStyle = con === 6 ? '#AB890E' : '#333333';
+			ctx.font = 'bold 12px sans';
+			ctx.fillText(con, x + 44, y + 34);
+			
+			//weapon icon
+			const weaponIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
+			const weaponBuffer = Buffer.from(weaponIcon.data, 'binary');
+			const weapImg = await loadImage(weaponBuffer);
+			ctx.drawImage(weapImg, x + 135, y, 45, 45);
+			
+			//weapon refine
+			const ref = c.weapon.refine;
+			ctx.fillStyle = ref === 5 ? '#AB890E' : '#333333';
+			ctx.fillRect(x + 164, y + 24, 20, 20);
+			ctx.fillStyle = ref === 5 ? '#E3C956' : '#DDDDDD';
+			ctx.fillRect(x + 166, y + 26, 16, 16);
+			ctx.fillStyle = ref === 5 ? '#AB890E' : '#333333';
+			ctx.font = 'bold 12px sans';
+			ctx.fillText(ref, x + 174, y + 34);
 			
 			console.log('Character ' + ++j + ' of ' + characters.length + ' - Drew ' + c.name);
 			y += 50;
