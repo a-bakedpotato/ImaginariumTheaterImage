@@ -9,14 +9,14 @@ const { Account, Character, Weapon } = require('./struct');
 const isUidAccount = /(18|[15-9])\d{8}/.test(enka);
 
 const elementColors = {
-	anemo: '#A7F5CD',
-	geo: '#F3D965',
-	electro: '#DEBAFF',
-	dendro: '#B1EB29',
-	hydro: '#08E4FF',
-	pyro: '#F16003',
-	cryo: '#CFFFFF',
-	mc: '#AAAAAA'
+	anemo: '#90EE90',
+	geo: '#E7FFAC',
+	electro: '#D5AAFF',
+	dendro: '#59C060',
+	hydro: '#85E3FF',
+	pyro: '#FAC898',
+	cryo: '#C4FAF8',
+	mc: '#D3D3D3'
 }
 
 async function getUidAccount(){
@@ -59,9 +59,16 @@ async function main(){
 	const canvas = createCanvas(w, h);
 	const ctx = canvas.getContext('2d');
 	
-	ctx.fillStyle = '#FFFFFF';
-	ctx.fillRect(0, 0, w, h);
+	const bg = await loadImage('./img/bg.png');
+	ctx.drawImage(bg, 0, 0, w, h);
+	const wolfy = await loadImage('./img/wolfy.png');
+	const wolfyH = Math.min(h, 250);
+	const wolfyW = wolfyH * 6 / 5
+	ctx.drawImage(wolfy, w - wolfyW, h - wolfyH, wolfyW, wolfyH);
+	//ctx.fillStyle = '#FFFFFF';
+	//ctx.fillRect(0, 0, w, h);
 	
+	const cache = {};
 	let i = 0;
 	let x = 10;
 	for (const acc of data){
@@ -70,30 +77,34 @@ async function main(){
 		//uid
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillStyle = '#000000';
+		ctx.fillStyle = '#FFFFFF';
 		ctx.font = '50px sansserif';
 		ctx.fillText(acc.uid, x + 240, 30);
 		
-		let y = 60;
 		let j = 0;
-		
+		let y = 60;
 		const characters = acc.characters
 			.filter(c => c.level >= 70)
 			.filter(c => elements.includes(c.element) || specialIds.includes(c.id))
 			.sort((a, b) => {
-				if (a.level !== b.level) return a.level - b.level; //i dont have an account to test this so might be backwards
+				if (a.level !== b.level) return b.level - a.level; //i dont have an account to test this so might be backwards
 				if (a.element !== b.element) return a.element.localeCompare(b.element);
 				return a.name.localeCompare(b.name);
 			});
 		for (const c of characters){
+			ctx.fillStyle = '#000000';
+			ctx.fillRect(x - 2, y - 2, 484, 49);
 			ctx.fillStyle = elementColors[c.element];
 			ctx.fillRect(x, y, 480, 45);
 			
 			//icon
-			const avatarIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
-			const avatarBuffer = Buffer.from(avatarIcon.data, 'binary');
-			const charImg = await loadImage(avatarBuffer);
-			ctx.drawImage(charImg, x + 5, y, 45, 45);
+			if (!cache[c.id]){
+				const avatarIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
+				const avatarBuffer = Buffer.from(avatarIcon.data, 'binary');
+				const charImg = await loadImage(avatarBuffer);
+				ctx.drawImage(charImg, x + 5, y, 45, 45);
+				cache[c.id] = charImg;
+			} else ctx.drawImage(cache[c.id], x + 5, y, 45, 45);
 			
 			//level
 			ctx.textAlign = 'left';
@@ -107,27 +118,30 @@ async function main(){
 			
 			//constellation
 			const con = c.constellation;
-			ctx.fillStyle = con === 6 ? '#AB890E' : '#333333';
+			ctx.fillStyle = con === 6 ? '#B26F69' : '#333333';
 			ctx.fillRect(x + 34, y + 24, 20, 20);
 			ctx.fillStyle = con === 6 ? '#E3C956' : '#DDDDDD';
 			ctx.fillRect(x + 36, y + 26, 16, 16);
-			ctx.fillStyle = con === 6 ? '#AB890E' : '#333333';
+			ctx.fillStyle = con === 6 ? '#B26F69' : '#333333';
 			ctx.font = 'bold 12px sans';
 			ctx.fillText(con, x + 44, y + 34);
 			
 			//weapon icon
-			const weaponIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
-			const weaponBuffer = Buffer.from(weaponIcon.data, 'binary');
-			const weapImg = await loadImage(weaponBuffer);
-			ctx.drawImage(weapImg, x + 135, y, 45, 45);
+			if (!cache[c.weapon.id]){
+				const weaponIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
+				const weaponBuffer = Buffer.from(weaponIcon.data, 'binary');
+				const weapImg = await loadImage(weaponBuffer);
+				ctx.drawImage(weapImg, x + 135, y, 45, 45);
+				cache[c.weapon.id] = weapImg;
+			} else ctx.drawImage(cache[c.weapon.id], x + 135, y, 45, 45);
 			
 			//weapon refine
 			const ref = c.weapon.refine;
-			ctx.fillStyle = ref === 5 ? '#AB890E' : '#333333';
+			ctx.fillStyle = ref === 5 ? '#B26F69' : '#333333';
 			ctx.fillRect(x + 164, y + 24, 20, 20);
 			ctx.fillStyle = ref === 5 ? '#E3C956' : '#DDDDDD';
 			ctx.fillRect(x + 166, y + 26, 16, 16);
-			ctx.fillStyle = ref === 5 ? '#AB890E' : '#333333';
+			ctx.fillStyle = ref === 5 ? '#B26F69' : '#333333';
 			ctx.font = 'bold 12px sans';
 			ctx.fillText(ref, x + 174, y + 34);
 			
