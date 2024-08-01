@@ -10,7 +10,7 @@ const isUidAccount = /(18|[15-9])\d{8}/.test(enka);
 
 const elementColors = {
 	anemo: '#90EE90',
-	geo: '#E7FFAC',
+	geo: '#F4D864',
 	electro: '#D5AAFF',
 	dendro: '#59C060',
 	hydro: '#85E3FF',
