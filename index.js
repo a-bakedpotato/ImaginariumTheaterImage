@@ -43,8 +43,8 @@ async function getUsernameAccount(){
 async function main(){
 	console.log('Initializing data');
 	const data = isUidAccount ? await getUidAccount() : await getUsernameAccount();
-	const avatarData = await axios.get('https://api.ambr.top/v2/en/avatar');
-	const weaponData = await axios.get('https://api.ambr.top/v2/en/weapon');
+	const avatarData = await axios.get('https://gi.yatta.moe/api/v2/en/avatar');
+	const weaponData = await axios.get('https://gi.yatta.moe/api/v2/en/weapon');
 	
 	Character.setAvatarData(avatarData.data.data.items);
 	Weapon.setWeaponData(weaponData.data.data.items);
@@ -97,7 +97,7 @@ async function main(){
 			
 			//icon
 			if (!cache[c.id]){
-				const avatarIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
+				const avatarIcon = await axios({ url: 'https://gi.yatta.moe/api/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
 				const avatarBuffer = Buffer.from(avatarIcon.data, 'binary');
 				const charImg = await loadImage(avatarBuffer);
 				ctx.drawImage(charImg, x + 5, y, 45, 45);
@@ -126,7 +126,7 @@ async function main(){
 			
 			//weapon icon
 			if (!cache[c.weapon.id]){
-				const weaponIcon = await axios({ url: 'https://api.ambr.top/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
+				const weaponIcon = await axios({ url: 'https://gi.yatta.moe/api/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
 				const weaponBuffer = Buffer.from(weaponIcon.data, 'binary');
 				const weapImg = await loadImage(weaponBuffer);
 				ctx.drawImage(weapImg, x + 135, y, 45, 45);
