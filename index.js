@@ -97,7 +97,7 @@ async function main(){
 			
 			//icon
 			if (!cache[c.id]){
-				const avatarIcon = await axios({ url: 'https://gi.yatta.moe/api/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
+				const avatarIcon = await axios({ url: 'https://gi.yatta.moe/assets/UI/' + c.icon + '.png', responseType: 'arraybuffer' });
 				const avatarBuffer = Buffer.from(avatarIcon.data, 'binary');
 				const charImg = await loadImage(avatarBuffer);
 				ctx.drawImage(charImg, x + 5, y, 45, 45);
@@ -126,7 +126,7 @@ async function main(){
 			
 			//weapon icon
 			if (!cache[c.weapon.id]){
-				const weaponIcon = await axios({ url: 'https://gi.yatta.moe/api/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
+				const weaponIcon = await axios({ url: 'https://gi.yatta.moe/assets/UI/' + c.weapon.icon + '.png', responseType: 'arraybuffer' });
 				const weaponBuffer = Buffer.from(weaponIcon.data, 'binary');
 				const weapImg = await loadImage(weaponBuffer);
 				ctx.drawImage(weapImg, x + 135, y, 45, 45);
