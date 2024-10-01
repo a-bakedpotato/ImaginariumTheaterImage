@@ -1,5 +1,5 @@
 {
 	"enka": "potato",
-	"elements": ["pyro", "dendro", "hydro"],
-	"special": ["Raiden Shogun", "Kaedehara Kazuha", "Kachina", "Clorinde"]
+	"elements": ["pyro", "electro", "geo"],
+	"special": ["Kinich", "Yelan", "Venti", "Sucrose"]
 }
